@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cheshmak-cordova-plugin"
+    version="4.0.2">
+	
+    <name>Cheshmak Cordova Plugin</name>
+    <description>Integration of Cheshmak library to Cordova</description>
+    <author>Milad Mohammadi Rezagah</author>		
+    <license>MIT</license>
+    <keywords>cordova,plugin,cheshmak,push</keywords>
+    <repo>https://github.com/vinoosir/cheshmak-cordova-plugin</repo>
+    <issue>https://github.com/vinoosir/cheshmak-cordova-plugin/issues</issue>
+	<engines>
+	    <engine name="cordova" version=">=3.0.0" />
+	</engines>
+	
+    <js-module src="www/cheshmak.js" name="cheshmak">
+        <clobbers target="window.cheshmak" />
+    </js-module>
+    
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="CheshmakCordova" >
+                <param name="android-package" value="me.cheshmak.cordova.CheshmakCordova"/>
+            </feature>
+        </config-file>
+		
+		<framework src="src/build.gradle" custom="true" type="gradleReference" />
+        <source-file src="src/CheshmakCordova.java" target-dir="src/me/cheshmak/cordova" />
+
+		<framework src="me.cheshmak:analytics:4.0.2"/>
+		<framework src="com.google.firebase:firebase-messaging:17.6.0"/>
+		<framework src="com.google.firebase:firebase-ads:17.2.0"/>
+    
+		<config-file target="AndroidManifest.xml" parent="application/activity">
+			<meta-data android:name="cheshmakPush" android:value="openActivityOnPush"/>
+		</config-file>
+		
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.INTERNET" />
+			<uses-permission android:name="android.permission.VIBRATE" />
+			<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+        </config-file>
+    
+    </platform>
+</plugin>
